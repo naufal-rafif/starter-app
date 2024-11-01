@@ -43,42 +43,6 @@
    ```
    - Buat folder baru: C:\laragon\bin\php\php-8.2.x
    - Ekstrak file zip PHP ke folder tersebut
-   - Copy php.ini-development menjadi php.ini
-   ```
-
-3. Konfigurasi php.ini:
-   - Buka file php.ini
-   - Aktifkan ekstensi berikut dengan menghapus tanda semicolon (;):
-     ```ini
-     extension=curl
-     extension=fileinfo
-     extension=mbstring
-     extension=openssl
-     extension=pdo_mysql
-     extension=pdo_sqlite
-     ```
-
-## Konfigurasi Path Windows
-
-1. Buka Environment Variables Windows:
-   - Klik kanan pada This PC/My Computer
-   - Properties
-   - Advanced System Settings
-   - Environment Variables
-
-2. Edit Path System Variable:
-   - Pilih "Path" pada System Variables
-   - Klik "Edit"
-   - Klik "New" dan tambahkan path berikut:
-     ```
-     C:\laragon\bin\php\php-8.2.x
-     C:\laragon\bin\nodejs
-     C:\laragon\bin\composer
-     ```
-
-3. Path untuk Composer:
-   ```
-   C:\laragon\bin\composer
    ```
 
 ## Verifikasi Instalasi
@@ -102,10 +66,8 @@
    cd example-app
    php artisan serve
    ```
-[Previous sections remain the same until Instalasi Visual Studio Code...]
 
 ## Instalasi Visual Studio Code
-[Previous VS Code sections remain the same...]
 
 4. Extension Tambahan yang Berguna:
    - Material Icon Theme (PKief.material-icon-theme)
