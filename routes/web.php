@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Page\Blog\Detail as BlogDetail;
+use App\Livewire\Page\Project\Detail as ProjectDetail;
 use App\Livewire\Page\Home;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Home::class)->name('app.home');
+Route::get('/project/{project:slug}', ProjectDetail::class)->name('app.project.details');
+Route::get('/blog/{blog:slug}', BlogDetail::class)->name('app.blog.details');
