@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Resources\BlogResource\RelationManagers;
 use App\Models\Blog;
+use App\Models\Category;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -36,12 +37,27 @@ class BlogResource extends Resource
                         ->maxLength(255)
                         ->columnSpan('full'),
 
-                    Forms\Components\Select::make('author_id')
-                        ->label('Author')
-                        ->options(User::pluck('name', 'id'))
-                        ->default(fn() => Auth::id())
-                        ->required()
-                        ->searchable(),
+                    Grid::make(2)->schema([
+                        Forms\Components\Select::make('author_id')
+                            ->label('Author')
+                            ->options(User::pluck('name', 'id'))
+                            ->default(fn() => Auth::id())
+                            ->required()
+                            ->searchable(),
+
+                        Forms\Components\Select::make('category_id')
+                            ->label('Category')
+                            ->options(Category::pluck('name', 'id'))
+                            ->required()
+                            ->searchable()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('description')
+                                    ->maxLength(65535),
+                            ]),
+                    ]),
 
                     Forms\Components\FileUpload::make('featured_image')
                         ->image()
@@ -53,23 +69,15 @@ class BlogResource extends Resource
                         ->columnSpan('full'),
 
                     Forms\Components\Textarea::make('excerpt')
+                        ->label('description')
                         ->required()
                         ->maxLength(255)
                         ->columnSpan('full'),
 
-                    Grid::make(3)->schema([
+                    Grid::make(2)->schema([
                         Forms\Components\TextInput::make('reading_time')
                             ->numeric()
                             ->required(),
-
-                        Forms\Components\Select::make('category')
-                            ->required()
-                            ->options([
-                                'Web Development' => 'Web Development',
-                                'Programming' => 'Programming',
-                                'Design' => 'Design',
-                                'Tutorial' => 'Tutorial',
-                            ]),
 
                         Forms\Components\DateTimePicker::make('published_at')
                             ->required(),
@@ -83,11 +91,15 @@ class BlogResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('featured_image'),
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('author.name')
                     ->label('Author')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category'),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Category')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('published_at')
                     ->dateTime(),
                 Tables\Columns\BooleanColumn::make('published_at')
@@ -97,7 +109,8 @@ class BlogResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('author')
                     ->relationship('author', 'name'),
-                Tables\Filters\SelectFilter::make('category'),
+                Tables\Filters\SelectFilter::make('category')
+                    ->relationship('category', 'name'),
             ])
             ->defaultSort('published_at', 'desc')
             ->actions([

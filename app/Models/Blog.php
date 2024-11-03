@@ -16,7 +16,7 @@ class Blog extends Model
         'excerpt',
         'featured_image',
         'reading_time',
-        'category',
+        'category_id',
         'author_id',
         'published_at'
     ];
@@ -31,10 +31,16 @@ class Blog extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    // Relationship with Category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     // Get related posts
     public function getRelatedPosts()
     {
-        return self::where('category', $this->category)
+        return self::where('category_id', $this->category_id)
             ->where('id', '!=', $this->id)
             ->limit(2)
             ->latest()

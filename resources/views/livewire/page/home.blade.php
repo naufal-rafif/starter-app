@@ -86,19 +86,21 @@
             <h2 class="text-3xl font-bold text-center mb-12">Latest Blog Posts</h2>
             <div class="flex flex-wrap justify-center">
                 @foreach ($blogs as $blog)
-                    <!-- Blog Post 1 -->
-                    <div class="p-4 w-full sm:w-1/2 md:w-1/3 xl:w-1/4">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                            <img src="{{ Storage::url($blog->featured_image) }}" alt="{{$blog->title}} image" class="w-full" />
-                            <div class="p-6">
+                    <!-- Blog Post Card -->
+                    <div class="p-4 w-full sm:w-1/2 md:w-1/3 xl:w-1/4 flex">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full w-full">
+                            <img src="{{ Storage::url($blog->featured_image) }}" alt="{{ $blog->title }} image"
+                                class="w-full" />
+                            <div class="p-6 flex flex-col flex-grow">
                                 <div class="text-sm text-gray-500 mb-2">{{ $blog->published_at->format('Y-m-d') }}</div>
                                 <h3 class="text-xl font-semibold mb-2">
                                     {{ $blog->title }}
                                 </h3>
-                                <p class="text-gray-600 mb-4">
+                                <p class="text-gray-600 mb-4 flex-grow">
                                     {!! $blog->content !!}
                                 </p>
-                                <a href="{{ route('app.blog.details', $blog->slug) }}" wire:navigate class="text-blue-600 hover:text-blue-700">Read More →</a>
+                                <a href="{{ route('app.blog.details', $blog->slug) }}" wire:navigate
+                                    class="text-blue-600 hover:text-blue-700 mt-auto">Read More →</a>
                             </div>
                         </div>
                     </div>

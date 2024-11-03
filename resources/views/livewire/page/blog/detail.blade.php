@@ -24,7 +24,7 @@
                     <span>•</span>
                     <span>{{ $blog->reading_time }} min read</span>
                     <span>•</span>
-                    <span>{{ $blog->category }}</span>
+                    <span>{{ $blog->category->name }}</span>
                 </div>
                 <h1 class="text-4xl font-bold text-gray-900 mb-4">
                     {{ $blog->title }}
